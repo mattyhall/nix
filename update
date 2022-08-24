@@ -3,6 +3,8 @@
 set bold (tput bold)
 set normal (tput sgr0)
 
+set hosts "angry-farmer"
+
 function announce
   echo "$bold> $argv[1]$normal"
 end
@@ -12,9 +14,22 @@ function home_manager
     home-manager switch -f hm/home.nix
 end
 
+function host
+  if not contains $argv[1] $hosts
+    echo "No such host '$argv[1]'"
+    exit 1
+  end
+
+  announce "sudo nixos-rebuild switch -I ./hosts/$argv[1]/configuration.nix"
+  sudo nixos-rebuild switch -I ./hosts/$argv[1]/configuration.nix
+end
+
 switch $argv[1]
   case "hm"
     home_manager
+  case "host"
+    host $argv[2]
   case "*"
-    echo "first argument should be 'hm'"
+    echo "first argument should be 'hm' or 'host'"
+    exit 1
 end
