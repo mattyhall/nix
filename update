@@ -1,0 +1,20 @@
+#!/usr/bin/env fish
+
+set bold (tput bold)
+set normal (tput sgr0)
+
+function announce
+  echo "$bold> $argv[1]$normal"
+end
+
+function home_manager
+    announce "home-manager switch -f hm/home.nix"
+    home-manager switch -f hm/home.nix
+end
+
+switch $argv[1]
+  case "hm"
+    home_manager
+  case "*"
+    echo "first argument should be 'hm'"
+end
