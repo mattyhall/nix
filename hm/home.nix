@@ -19,6 +19,10 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  home.sessionVariables = {
+    EDITOR = "kak";
+  };
+
   home.packages = with pkgs; [
     ripgrep
     fd
