@@ -69,6 +69,7 @@
       numberLines = {
         enable = true;
         relative = true;
+        highlightCursor = true;
       };
 
       colorScheme = "dracula";
