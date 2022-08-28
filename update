@@ -3,7 +3,7 @@
 set bold (tput bold)
 set normal (tput sgr0)
 
-set hosts "angry-farmer"
+set hosts "angry-farmer" "barbican"
 
 function announce
   echo "$bold> $argv[1]$normal"
