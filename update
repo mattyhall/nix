@@ -20,8 +20,8 @@ function host
     exit 1
   end
 
-  announce "sudo nixos-rebuild switch -I ./hosts/$argv[1]/configuration.nix"
-  sudo nixos-rebuild switch -I ./hosts/$argv[1]/configuration.nix
+  announce "sudo nixos-rebuild switch -I nixos-config=./hosts/$argv[1]/configuration.nix"
+  sudo nixos-rebuild switch -I nixos-config=./hosts/$argv[1]/configuration.nix
 end
 
 switch $argv[1]
