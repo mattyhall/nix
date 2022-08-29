@@ -7,7 +7,7 @@
   users.users.mjh = {
     isNormalUser = true;
     home = "/home/mjh";
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" ];
     shell = pkgs.fish;
   };
 
