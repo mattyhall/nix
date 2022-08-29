@@ -47,6 +47,7 @@
     passwordAuthentication = false;
     kbdInteractiveAuthentication = false;
   };
+
   users.users."mjh".openssh.authorizedKeys.keys = [
     # Rocket
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyD73jJmK8hH+AcOzXiG5oNIm5t+XxVYcHY5Nect+yui3pYaKkh63dWl0jWOa/UzZhFj/UQqF22puseggPJ2FCH7PoNlXGwUQ7NTSu113U1ug5KupNpXQew8w1oprrBoeJi3Qx/5MtS7Rpv8x2Knw6TOPBaaIgnibz8BBdLald3vzyVqyBkV2Vx1lo+XCXrHkvr5K+BKrI2koSv80OValFAk3kS9i2AyxcPXmLiAOD8oC6ktg2Y5shm4GXDZjJ1eqiRHw7pyyRFSWO5dxznGq2F6F1VmlicoEmdJKahiogy+s+cDVf8lFgOBCVtnQDJ+iTwGJJfMHIdpVmNQYJw6e2iSAi0SWQIEZ9i7ojCg8BBhrskZc8uwpLzJtky+dkizz2CsZ62th/Q6vRVW6oTbL8l3U7iDE3q2p+51akAhPBsScvDRafG3+gJkw2F5FCm+NtfEgXQZHyG+Gp1lwjoJYhmQA3VI6fkrQHqInfaIHW+wI9WIT479fvbDQfRKVlAgM= mjh@DESKTOP-NJE68U1"
@@ -68,6 +69,20 @@
       intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
     ];
   };
+
+  services.nginx = {
+    enable = true;
+
+    virtualHosts."dns.barbican.local".locations."/".proxyPass = "http://127.0.0.1:8000";
+    virtualHosts."films.barbican.local".locations."/".proxyPass = "http://127.0.0.1:7878";
+    virtualHosts."tv.barbican.local".locations."/".proxyPass = "http://127.0.0.1:8989";
+    virtualHosts."jellyfin.barbican.local".locations."/".proxyPass = "http://127.0.0.1:8096";
+    virtualHosts."grafana.barbican.local".locations."/".proxyPass = "http://127.0.0.1:3000";
+
+    virtualHosts."qbit.barbican.local".locations."/".return = "301 http://192.168.1.147:8080";
+  };
+
+  networking.firewall.allowedTCPPorts = [ 80 ];
 
   system.stateVersion = "22.05"; # Did you read the comment?
 }
