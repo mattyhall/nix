@@ -3,7 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let
+  secrets = import ../../secrets.nix;
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -31,7 +33,6 @@
   i18n.defaultLocale = "en_GB.UTF-8";
 
   services.xserver.enable = true;
-
   services.xserver.desktopManager.xfce.enable = true;
   services.xserver.displayManager.defaultSession = "xfce";
 
@@ -54,6 +55,9 @@
   ];
 
   virtualisation.docker.enable = true;
+  virtualisation.docker.daemon.settings = {
+    dns = ["192.168.1.147" "8.8.8.8"];
+  };
 
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
@@ -70,6 +74,47 @@
     ];
   };
 
+  services.grafana = {
+    enable = true;
+    domain = "grafana.barbican.local";
+    port = 2342;
+    addr = "127.0.0.1";
+  };
+
+  services.prometheus = {
+    enable = true;
+    port = 9001;
+
+    exporters = {
+      node = {
+        enable = true;
+        enabledCollectors = [ "systemd" "cpu" "cpufreq" "diskstats" "hwmon" "filesystem" "loadavg" "meminfo" "netdev" ];
+        port = 9002;
+      };
+      pihole = {
+        enable = true;
+        piholeHostname = "192.168.1.147";
+        password = secrets.pihole.password;
+        port = 9003;
+      };
+    };
+
+    scrapeConfigs = [
+      {
+        job_name = "barbican";
+        static_configs = [{
+          targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ];
+        }];
+      }
+      {
+        job_name = "pihole";
+        static_configs = [{
+          targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.pihole.port}" ];
+        }];
+      }
+    ];
+  };
+
   services.nginx = {
     enable = true;
 
@@ -77,7 +122,15 @@
     virtualHosts."films.barbican.local".locations."/".proxyPass = "http://127.0.0.1:7878";
     virtualHosts."tv.barbican.local".locations."/".proxyPass = "http://127.0.0.1:8989";
     virtualHosts."jellyfin.barbican.local".locations."/".proxyPass = "http://127.0.0.1:8096";
-    virtualHosts."grafana.barbican.local".locations."/".proxyPass = "http://127.0.0.1:3000";
+    virtualHosts."prometheus.barbican.local".locations."/".proxyPass = "http://127.0.0.1:${toString config.services.prometheus.port}";
+
+    virtualHosts."${config.services.grafana.domain}".locations."/" = {
+      proxyPass = "http://127.0.0.1:${toString config.services.grafana.port}";
+      proxyWebsockets = true;
+      extraConfig = ''
+        proxy_set_header Host $host;
+      '';
+    };
 
     virtualHosts."qbit.barbican.local".locations."/".return = "301 http://192.168.1.147:8080";
   };
