@@ -149,6 +149,7 @@
 
           W = "extend_next_word_start";
           B = "extend_prev_word_start";
+          E = "extend_next_word_end";
           X = "extend_line_below";
 
           ";" = "keep_primary_selection";
@@ -160,20 +161,20 @@
           A-K = "remove_selections";
 
           N = "extend_search_next";
-        };
         
-        space = {
-          space = "file_picker";
-          "," = "buffer_picker";
-        };
-        
-        c = {
-          s = "symbol_picker";
-          S = "workspace_symbol_picker";
-          d = "diagnostics_picker";
-          D = "workspace_diagnostics_picker";
-          R = "rename_symbol";
-          a = "code_action";
+          space = {
+            space = "file_picker";
+            "," = "buffer_picker";
+          
+            c = {
+              s = "symbol_picker";
+              S = "workspace_symbol_picker";
+              d = "diagnostics_picker";
+              D = "workspace_diagnostics_picker";
+              R = "rename_symbol";
+              a = "code_action";
+            };
+          };
         };
       };
     };
