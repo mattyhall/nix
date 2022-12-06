@@ -220,6 +220,15 @@ in
     };
   };
 
+  services.navidrome = {
+    enable = true;
+    settings = {
+      MusicFolder = "/run/media/mjh/ddf2e11c-7aa4-4833-9cfc-8c84e9a453f9/music/";
+      Port = 4533;
+      Address = "0.0.0.0";
+    };
+  };
+
   services.nginx = {
     enable = true;
 
@@ -228,6 +237,7 @@ in
     virtualHosts."tv.barbican.local".locations."/".proxyPass = "http://127.0.0.1:8989";
     virtualHosts."jellyfin.barbican.local".locations."/".proxyPass = "http://127.0.0.1:8096";
     virtualHosts."prometheus.barbican.local".locations."/".proxyPass = "http://127.0.0.1:${toString config.services.prometheus.port}";
+    virtualHosts."music.barbican.local".locations."/".proxyPass = "http://127.0.0.1:${toString config.services.navidrome.settings.Port}";
 
     virtualHosts."${config.services.grafana.domain}".locations."/" = {
       proxyPass = "http://127.0.0.1:${toString config.services.grafana.port}";
@@ -240,7 +250,7 @@ in
     virtualHosts."qbit.barbican.local".locations."/".return = "301 http://192.168.1.147:8080";
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 ];
+  networking.firewall.allowedTCPPorts = [ 80 4533 ];
 
   system.stateVersion = "22.05"; # Did you read the comment?
 }
