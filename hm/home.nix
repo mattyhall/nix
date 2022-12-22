@@ -313,9 +313,41 @@
   programs.fish = {
     enable = true;
 
+    shellInit = ''
+    direnv hook fish | source
+    '';
+
     shellAliases = {
       gs = "git status";
       gb = "git branch | fzf | git switch";
+    };
+  };
+  
+  programs.foot = {
+    enable = true;
+    settings = {
+      main.font = "BerkeleyMono-Regular";
+
+      cursor.color = "0e1419 f19618";
+      colors = {
+        background = "0e1419";
+        foreground = "e5e1cf";
+        regular0 = "000000";
+        regular1 = "ff3333";
+        regular2 = "b8cc52";
+        regular3 = "e6c446";
+        regular4 = "36a3d9";
+        regular5 = "f07078";
+        regular6 = "95e5cb";
+        bright7 = "ffffff";
+        bright0 = "323232";
+        bright1 = "ff6565";
+        bright2 = "e9fe83";
+        bright3 = "fff778";
+        bright4 = "68d4ff";
+        bright5 = "ffa3aa";
+        bright6 = "c7fffc";
+      };
     };
   };
 }
