@@ -33,6 +33,14 @@
     openssh
     less
   ];
+  
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Ayu-Dark";
+      package = pkgs.ayu-theme-gtk;
+    };
+  };
 
   programs.fzf = {
     enable = true;

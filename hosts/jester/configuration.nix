@@ -63,6 +63,20 @@ in {
 
   hardware.opengl.enable = true;
 
+  programs.light.enable = true;
+  
+  programs.dconf.enable = true;
+  
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd river";
+        user = "mjh";
+      };
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     vim 
     git
@@ -79,6 +93,7 @@ in {
     waybar 
     fuzzel # launcher
     wl-clipboard
+    greetd.tuigreet
   ];
   
   fonts.fontDir.enable = true;
