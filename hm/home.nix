@@ -39,7 +39,7 @@
     enableFishIntegration = true;
     defaultCommand = "fd --type f";
   };
-
+  
   xdg.configFile."kak-lsp/kak-lsp.toml".source = ./extra/kak/kak-lsp.toml;
   xdg.configFile."kak/colors/dracula.kak".source = ./extra/kak/dracula.kak;
   xdg.configFile."kak/colors/dracula-transparent.kak".source = ./extra/kak/dracula-transparent.kak;
@@ -323,10 +323,13 @@
     };
   };
   
+  xdg.configFile."river/init".source = ./extra/river;
+  xdg.configFile."river/init".executable = true;
+
   programs.foot = {
     enable = true;
     settings = {
-      main.font = "BerkeleyMono-Regular";
+      main.font = "BerkeleyMono-Regular:size=7";
 
       cursor.color = "0e1419 f19618";
       colors = {
@@ -349,5 +352,76 @@
         bright6 = "c7fffc";
       };
     };
+  };
+  
+  programs.waybar = {
+    enable = true;
+    settings = {
+      bar = {
+        layer = "top";
+        position = "top";
+        height = 24;
+
+        modules-left = ["river/tags"];
+        modules-center = ["river/window"];
+        modules-right = ["pulseaudio" "network" "cpu" "memory" "battery" "clock"];
+        
+        cpu.format = "{usage}% ";
+        memory.format =  "{}% ";
+        battery = {
+          states = { warning = 30; critical = 15; };
+          format = "{capacity}% {icon}";
+          format-icons = ["" "" "" "" ""];
+        };
+        network = {
+          format-wifi = "{essid} ({signalStrength}%) ";
+          format-ethernet = "{ifname}: {ipaddr}/{cidr} ";
+          format-disconnected = "Disconnected ⚠";
+        };
+        pulseaudio = {
+          format = "{volume}% {icon}";
+          format-bluetooth = "{volume}% {icon}";
+          format-muted = "";
+          format-icons = {
+            headphones = "";
+            handsfree = "";
+            headset = "";
+            phone = "";
+            portable = "";
+            car = "";
+            default = ["" ""];
+          };
+          on-click = "pavucontrol";
+        };
+      };
+    };
+    style = ''
+* {
+  font-family: "Berkeley Mono";
+  min-height: 0px;
+  font-size: 12px;
+}
+
+window#waybar {
+  background: transparent;
+  color: white;
+}
+
+#tags button {
+  color: white;
+  background: transparent;
+  margin: 1px 2px;
+  padding: 1px 2px;
+}
+
+#tags button.focused {
+  color: #FFB454;
+}
+
+#clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray {
+  padding: 0 3px;
+  margin-right: 16px;
+}     
+    '';
   };
 }

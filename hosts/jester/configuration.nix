@@ -47,6 +47,8 @@ in {
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
 
+  security.pam.services.swaylock = {};
+
   # Set your time zone.
   time.timeZone = "Europe/London";
 
@@ -70,10 +72,13 @@ in {
     direnv
 
     newRiver
-    mako
-    waylock
-    waybar
-    fuzzel
+    mako # notifs
+    swayidle
+    swaylock
+    swaybg
+    waybar 
+    fuzzel # launcher
+    wl-clipboard
   ];
   
   fonts.fontDir.enable = true;
