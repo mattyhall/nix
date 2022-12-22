@@ -16,7 +16,7 @@ swayidle -w \
 	timeout 300 'swaylock -Ff -i /home/mjh/nix/wallpapers/mist.png' \
 	before-sleep 'swaylock -Ff -i /home/mjh/nix/wallpapers/mist.png' &
   
-wyabar &
+waybar &
 
 # Super+Shift+Return to start an instance of fuzzel
 riverctl map normal Super+Shift Return spawn fuzzel
@@ -89,14 +89,14 @@ do
     # Super+[1-9] to focus tag [0-8]
     riverctl map normal Super $i set-focused-tags $tags
 
-    # Super+Shift+[1-9] to toggle tag [0-8] of focused view
-    riverctl map normal Super+Shift $i toggle-view-tags $tags
+    # Super+Shift+[1-9] to tag focused view with tag [0-8]
+    riverctl map normal Super+Shift $i set-view-tags $tags
 
-    # Super+Shift+Control+[1-9] to tag focused view with tag [0-8]
-    riverctl map normal Super+Shift+Control $i set-view-tags $tags
+    # Super+Ctrl+[1-9] to toggle tag [0-8] of focused view
+    riverctl map normal Super+Control $i toggle-view-tags $tags
 
-    # Super+Ctrl+[1-9] to toggle focus of tag [0-8]
-    riverctl map normal Super+Control $i toggle-focused-tags $tags
+    # Super+Shift+Ctrl+[1-9] to toggle focus of tag [0-8]
+    riverctl map normal Super+Shift+Control $i toggle-focused-tags $tags
 done
 
 # Super+0 to focus all tags
@@ -152,18 +152,11 @@ done
 
 # Set background and border color
 riverctl background-color 0x002b36
-riverctl border-color-focused 0x93a1a1
+riverctl border-color-focused 0x36a3d9
 riverctl border-color-unfocused 0x586e75
 
 # Set keyboard repeat rate
 riverctl set-repeat 50 300
-
-# Make certain views start floating
-riverctl float-filter-add app-id float
-riverctl float-filter-add title "popup title with spaces"
-
-# Set app-ids and titles of views which should use client side decorations
-riverctl csd-filter-add app-id "gedit"
 
 # Set the default layout generator to be rivertile and start it.
 # River will send the process group of the init executable SIGTERM on exit.
