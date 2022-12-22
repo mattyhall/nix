@@ -20,7 +20,7 @@
   programs.home-manager.enable = true;
 
   home.sessionVariables = {
-    EDITOR = "kak";
+    EDITOR = "hx";
   };
 
   home.packages = with pkgs; [
