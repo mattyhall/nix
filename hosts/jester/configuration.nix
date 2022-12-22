@@ -4,7 +4,22 @@
 
 { config, pkgs, ... }:
 
-{
+let 
+  unstable = import <nixos-unstable> {};
+  newRiver = (pkgs.river.overrideAttrs (old: {
+    version = "0.2-dev-001";
+    src = pkgs.fetchFromGitHub {
+      owner = "riverwm";
+      repo = "river";
+      rev = "e603c5460a27bdc8ce6c32c8ee5e53fb789bc10b";
+      sha256 = "sha256-x971VRWp72uNRNcBTU2H81EiqWa5kg0E5n7tK8ypaQM=";
+      fetchSubmodules = true;      
+    };
+  })).override { 
+    wlroots = unstable.wlroots_0_16;
+     xwaylandSupport = true;
+   };
+in {
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
@@ -44,6 +59,8 @@
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
+  hardware.opengl.enable = true;
+
   environment.systemPackages = with pkgs; [
     vim 
     git
@@ -52,8 +69,7 @@
     pavucontrol
     direnv
 
-    river
-    libGL
+    newRiver
     mako
     waylock
     waybar
