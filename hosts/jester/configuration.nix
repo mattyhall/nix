@@ -85,6 +85,9 @@ in {
     pavucontrol
     direnv
 
+    xfce.thunar
+    gnome3.eog
+
     newRiver
     mako # notifs
     swayidle
