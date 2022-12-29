@@ -10,11 +10,11 @@
 
 # Note: the "Super" modifier is also known as Logo, GUI, Windows, Mod4, etc.
 
-swaybg -i ~/nix/wallpapers/mist.png &
+swaybg -i ~/Documents/nix/wallpapers/mist.png &
 
 swayidle -w \
-	timeout 300 'swaylock -Ff -i /home/mjh/nix/wallpapers/mist.png' \
-	before-sleep 'swaylock -Ff -i /home/mjh/nix/wallpapers/mist.png' &
+	timeout 300 'swaylock -Ff -i /home/mjh/Documents/nix/wallpapers/mist.png' \
+	before-sleep 'swaylock -Ff -i /home/mjh/Documents/nix/wallpapers/mist.png' &
   
 waybar &
 
