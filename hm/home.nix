@@ -117,12 +117,21 @@
 
   programs.helix = {
     enable = true;
+
+    languages = [
+      {
+        name = "git-commit";
+        rulers = [50 72];
+      }
+    ];
+
     settings = {
       theme = "ayu_dark";
       editor = {
         true-color = true;
         line-number = "relative";
         scrolloff = 0;
+        rulers = [80 120];
 
         statusline = {
           left = [
@@ -328,6 +337,7 @@
     shellAliases = {
       gs = "git status";
       gb = "git branch | fzf | git switch";
+      e = "$EDITOR";
     };
   };
   
