@@ -32,6 +32,7 @@
     htop
     openssh
     less
+    neovim
   ];
   
   gtk = {
@@ -47,7 +48,9 @@
     enableFishIntegration = true;
     defaultCommand = "fd --type f";
   };
-  
+
+  xdg.configFile."nvim/init.lua".source = ./extra/nvim/init.lua;
+
   xdg.configFile."kak-lsp/kak-lsp.toml".source = ./extra/kak/kak-lsp.toml;
   xdg.configFile."kak/colors/dracula.kak".source = ./extra/kak/dracula.kak;
   xdg.configFile."kak/colors/dracula-transparent.kak".source = ./extra/kak/dracula-transparent.kak;
