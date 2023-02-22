@@ -56,6 +56,12 @@ require('packer').startup(function(use)
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
 
+  use 'Olical/conjure'
+  use { 'tpope/vim-sexp-mappings-for-regular-people', requires = { 'guns/vim-sexp' } }
+  use 'kylechui/nvim-surround'
+
+  use { "nvim-neorg/neorg", run = ":Neorg sync-parsers", requires = { "nvim-lua/plenary.nvim" }, tag = "*" }
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
@@ -128,10 +134,6 @@ vim.g.maplocalleader = ' '
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
--- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -271,6 +273,20 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
+require('neorg').setup {
+  load = {
+    ["core.defaults"] = {}, -- Loads default behaviour
+    ["core.norg.concealer"] = {}, -- Adds pretty icons to your documents
+    ["core.norg.dirman"] = { -- Manages Neorg workspaces
+      config = {
+        workspaces = {
+          notes = "~/notes",
+        },
+      },
+    },
+  },
+}
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
@@ -331,6 +347,10 @@ require('lspconfig').zls.setup{
   on_attach = on_attach
 }
 
+require('lspconfig').clojure_lsp.setup{
+  on_attach = on_attach
+}
+
 local servers = {
   -- clangd = {},
   gopls = {},
@@ -355,6 +375,11 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Turn on lsp status information
 require('fidget').setup()
+
+require('nvim-surround').setup()
+
+vim.o.ts = 4
+vim.o.sw = 4
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
