@@ -135,6 +135,10 @@ vim.g.maplocalleader = ' '
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
+-- Remap for dealing with word wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
@@ -210,6 +214,8 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
+vim.keymap.set('n', '<leader>nn', ':Neorg index<CR>', { desc = 'Open [n]otes' })
+
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
@@ -276,12 +282,18 @@ require('nvim-treesitter.configs').setup {
 require('neorg').setup {
   load = {
     ["core.defaults"] = {}, -- Loads default behaviour
-    ["core.norg.concealer"] = {}, -- Adds pretty icons to your documents
+    ["core.norg.concealer"] = { 
+      config = { folds = false }
+    }, -- Adds pretty icons to your documents
+    ["core.export"] = {},
+    ["core.export.markdown"] = {},
     ["core.norg.dirman"] = { -- Manages Neorg workspaces
       config = {
         workspaces = {
           notes = "~/notes",
         },
+
+        default_workspace = "notes"
       },
     },
   },
