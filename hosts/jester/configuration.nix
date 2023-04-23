@@ -61,11 +61,21 @@ in {
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
-  hardware.opengl.enable = true;
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
 
   programs.light.enable = true;
   
   programs.dconf.enable = true;
+
+  virtualisation.docker.enable = true;
   
   services.greetd = {
     enable = true;
@@ -88,6 +98,9 @@ in {
     xfce.thunar
     gnome3.eog
 
+    linuxPackages_latest.perf
+    
+
     newRiver
     mako # notifs
     swayidle
@@ -97,6 +110,10 @@ in {
     fuzzel # launcher
     wl-clipboard
     greetd.tuigreet
+    slurp
+    wayshot
+
+    libva-utils
   ];
   
   fonts.fontDir.enable = true;
