@@ -13,16 +13,26 @@ in {
       ../common.nix
     ];
 
+  environment.pathsToLink = [
+    "/share/nix-direnv"
+  ];
+
+  nixpkgs.overlays = [
+    (self: super: { nix-direnv = super.nix-direnv.override { enableFlakes = true; }; } )
+  ];
+
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
-      keep-outputs = true
-      keep-derivations = true
       experimental-features = nix-command flakes
     '';
     gc = {
       automatic = true;
-      options = "--delete-older-than 8d";
+      options = "--delete-older-than 91d";
+    };
+    settings = {
+      keep-outputs = true;
+      keep-derivations = true;
     };
   };
 
