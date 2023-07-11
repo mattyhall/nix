@@ -6,19 +6,6 @@
 
 let 
   unstable = import <nixos-unstable> {};
-  newRiver = (pkgs.river.overrideAttrs (old: {
-    version = "0.2-dev-001";
-    src = pkgs.fetchFromGitHub {
-      owner = "riverwm";
-      repo = "river";
-      rev = "e603c5460a27bdc8ce6c32c8ee5e53fb789bc10b";
-      sha256 = "sha256-x971VRWp72uNRNcBTU2H81EiqWa5kg0E5n7tK8ypaQM=";
-      fetchSubmodules = true;      
-    };
-  })).override { 
-    wlroots = unstable.wlroots_0_16;
-     xwaylandSupport = true;
-   };
 in {
   imports =
     [ # Include the results of the hardware scan.
@@ -101,7 +88,7 @@ in {
     linuxPackages_latest.perf
     
 
-    newRiver
+    river
     mako # notifs
     swayidle
     swaylock
