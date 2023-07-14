@@ -1,9 +1,25 @@
-{ pkgs, git-email ? "matthew@quickbeam.me.uk", extra-programs ? { }, ... }: {
+{ pkgs, ... }: {
   home = {
     username = "mjh";
     homeDirectory = "/home/mjh";
     stateVersion = "22.05";
+
+    sessionVariables = { EDITOR = "nvim"; };
+
+    packages = with pkgs; [
+      ripgrep
+      fd
+      httpie
+      jq
+      delta
+      htop
+      openssh
+      less
+      neovim
+    ];
   };
+
+  xdg.configFile."nvim/init.lua".source = ./extra/nvim/init.lua;
 
   programs = {
     home-manager.enable = true;
@@ -18,7 +34,6 @@
       enable = true;
 
       userName = "Matt Hall";
-      userEmail = git-email;
 
       delta.enable = true;
 
@@ -59,26 +74,5 @@
 
       extraConfig = builtins.readFile ./extra/tmux.conf;
     };
-  } // extra-programs;
-
-  home.sessionVariables = { EDITOR = "nvim"; };
-
-  home.packages = with pkgs; [
-    ripgrep
-    fd
-    httpie
-    jq
-    delta
-    htop
-    openssh
-    less
-    neovim
-  ];
-
-  xdg.configFile."nvim/init.lua".source = ./extra/nvim/init.lua;
-
-  xdg.configFile."river/init" = {
-    source = ./extra/river;
-    executable = true;
   };
 }
