@@ -1,6 +1,8 @@
 { pkgs, lib, config, ... }:
 let cfg = config.machine;
 in {
+  imports = [ (import ./graphical.nix { inherit lib pkgs config; }) ];
+
   options.machine = {
     hostname = lib.mkOption {
       type = lib.types.str;
@@ -21,15 +23,13 @@ in {
   };
 
   config = lib.mkMerge [
-    cfg.extra
-
-    (import
-    ./common.nix
-    {
+    (import ./common.nix {
       inherit pkgs;
       hostname = cfg.hostname;
       extra-packages = cfg.extra-packages;
     })
+
+    cfg.extra
   ];
 }
 
