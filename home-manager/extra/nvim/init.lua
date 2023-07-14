@@ -282,12 +282,12 @@ require('nvim-treesitter.configs').setup {
 require('neorg').setup {
   load = {
     ["core.defaults"] = {}, -- Loads default behaviour
-    ["core.norg.concealer"] = { 
+    ["core.concealer"] = { 
       config = { folds = false }
     }, -- Adds pretty icons to your documents
     ["core.export"] = {},
     ["core.export.markdown"] = {},
-    ["core.norg.dirman"] = { -- Manages Neorg workspaces
+    ["core.dirman"] = { -- Manages Neorg workspaces
       config = {
         workspaces = {
           notes = "~/notes",
@@ -362,6 +362,8 @@ require('lspconfig').zls.setup{
 require('lspconfig').clojure_lsp.setup{
   on_attach = on_attach
 }
+
+require('lspconfig').nil_ls.setup{}
 
 local servers = {
   -- clangd = {},
