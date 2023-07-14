@@ -1,35 +1,47 @@
-{ pkgs, lib, config, ... }:
-let cfg = config.machine;
-in {
-  imports = [ (import ./graphical.nix { inherit lib pkgs config; }) ];
-
-  options.machine = {
-    hostname = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      example = "laptop";
+{ pkgs, ... }: {
+  nix = {
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 30d";
     };
 
-    extra-packages = lib.mkOption {
-      type = lib.types.listOf lib.types.package;
-      default = [ ];
-      example = with pkgs; [ git ];
-    };
-
-    extra = lib.mkOption {
-      type = lib.types.attrs;
-      default = { };
+    settings = {
+      keep-outputs = true;
+      keep-derivations = true;
+      experimental-features = [ "nix-command" "flakes" ];
     };
   };
 
-  config = lib.mkMerge [
-    (import ./common.nix {
-      inherit pkgs;
-      hostname = cfg.hostname;
-      extra-packages = cfg.extra-packages;
-    })
+  environment.pathsToLink = [ "/share/nix-direnv" ];
 
-    cfg.extra
+  programs.fish.enable = true;
+  environment.shells = [ pkgs.fish ];
+
+  users.users.mjh = {
+    isNormalUser = true;
+    home = "/home/mjh";
+    extraGroups = [ "wheel" "networkmanager" "docker" "video" ];
+    shell = pkgs.fish;
+  };
+
+  networking.networkmanager.enable = true;
+
+  time.timeZone = "Europe/London";
+  i18n.defaultLocale = "en_GB.UTF-8";
+
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+
+  virtualisation.docker.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    direnv
+    nix-direnv
+
+    neovim
+    git
   ];
+
+  system.stateVersion = "22.11"; # Did you read the comment?
 }
 
