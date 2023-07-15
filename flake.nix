@@ -24,6 +24,10 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         modules = [ ./home-manager/rocket.nix ];
       };
+      "mjh@barbican" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        modules = [ ./home-manager/barbican.nix ];
+      };
     };
   };
 }
