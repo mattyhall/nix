@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  imports = [ ./jester-hardware-configuration.nix ./configuration.nix ];
+  imports = [ ./hardware.nix ../configuration.nix ];
 
   networking.hostName = "jester";
   services.xserver.libinput.enable = true;

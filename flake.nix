@@ -12,7 +12,7 @@
 
   outputs = { self, nixpkgs, home-manager }: {
     nixosConfigurations = {
-      jester = nixpkgs.lib.nixosSystem { modules = [ ./nixos/jester.nix ]; };
+      jester = nixpkgs.lib.nixosSystem { modules = [ ./nixos/jester ]; };
     };
 
     homeConfigurations = {
