@@ -1,11 +1,16 @@
-{ pkgs, config, lib, ... }:
-let cfg = config.machine.graphical;
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.machine.graphical;
 in {
   options.machine.graphical = {
     enable = lib.mkEnableOption "graphical";
 
     wm = lib.mkOption {
-      type = lib.types.enum [ "river" "xfce" ];
+      type = lib.types.enum ["river" "xfce"];
       default = "river";
       description = "the window manager to use";
     };
@@ -35,7 +40,7 @@ in {
       fonts.fonts = with pkgs; [
         fira-code
         fira-code-symbols
-        (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+        (nerdfonts.override {fonts = ["FiraCode" "DroidSansMono"];})
       ];
     }
 
@@ -53,7 +58,7 @@ in {
         slurp
         wayshot
       ];
-      security.pam.services.swaylock = { };
+      security.pam.services.swaylock = {};
 
       programs.light.enable = true;
 
@@ -63,8 +68,7 @@ in {
         enable = true;
         settings = {
           default_session = {
-            command =
-              "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd river";
+            command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd river";
             user = "mjh";
           };
         };

@@ -1,10 +1,10 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   home = {
     username = "mjh";
     homeDirectory = "/home/mjh";
     stateVersion = "22.05";
 
-    sessionVariables = { EDITOR = "nvim"; };
+    sessionVariables = {EDITOR = "nvim";};
 
     packages = with pkgs; [
       ripgrep

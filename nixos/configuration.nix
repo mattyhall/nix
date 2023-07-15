@@ -1,5 +1,5 @@
-{ pkgs, ... }: {
-  imports = [ ./graphical.nix ];
+{pkgs, ...}: {
+  imports = [./graphical.nix];
 
   nix = {
     gc = {
@@ -10,19 +10,19 @@
     settings = {
       keep-outputs = true;
       keep-derivations = true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = ["nix-command" "flakes"];
     };
   };
 
-  environment.pathsToLink = [ "/share/nix-direnv" ];
+  environment.pathsToLink = ["/share/nix-direnv"];
 
   programs.fish.enable = true;
-  environment.shells = [ pkgs.fish ];
+  environment.shells = [pkgs.fish];
 
   users.users.mjh = {
     isNormalUser = true;
     home = "/home/mjh";
-    extraGroups = [ "wheel" "networkmanager" "docker" "video" ];
+    extraGroups = ["wheel" "networkmanager" "docker" "video"];
     shell = pkgs.fish;
   };
 
@@ -42,4 +42,3 @@
     git
   ];
 }
-

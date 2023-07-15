@@ -1,4 +1,4 @@
-{ ... }: {
+{...}: {
   xdg.configFile."river/init" = {
     source = ./extra/river;
     executable = true;
@@ -14,10 +14,9 @@
           position = "top";
           height = 24;
 
-          modules-left = [ "river/tags" ];
-          modules-center = [ "river/window" ];
-          modules-right =
-            [ "pulseaudio" "network" "cpu" "memory" "battery" "clock" ];
+          modules-left = ["river/tags"];
+          modules-center = ["river/window"];
+          modules-right = ["pulseaudio" "network" "cpu" "memory" "battery" "clock"];
 
           cpu.format = "{usage}% ";
           memory.format = "{}% ";
@@ -27,7 +26,7 @@
               critical = 15;
             };
             format = "{capacity}% {icon}";
-            format-icons = [ "" "" "" "" "" ];
+            format-icons = ["" "" "" "" ""];
           };
           network = {
             format-wifi = "{essid} ({signalStrength}%) ";
@@ -45,7 +44,7 @@
               phone = "";
               portable = "";
               car = "";
-              default = [ "" "" ];
+              default = ["" ""];
             };
             on-click = "pavucontrol";
           };

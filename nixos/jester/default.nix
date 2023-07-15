@@ -1,5 +1,5 @@
-{ pkgs, ... }: {
-  imports = [ ./hardware.nix ../configuration.nix ];
+{pkgs, ...}: {
+  imports = [./hardware.nix ../configuration.nix];
 
   networking = {
     hostName = "jester";

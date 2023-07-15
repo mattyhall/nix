@@ -1,4 +1,4 @@
-{ config, ... }: {
+{config, ...}: {
   services.grafana = {
     enable = true;
     settings.server = {
@@ -40,23 +40,27 @@
     scrapeConfigs = [
       {
         job_name = "barbican";
-        static_configs = [{
-          targets = [
-            "127.0.0.1:${
-              toString config.services.prometheus.exporters.node.port
-            }"
-          ];
-        }];
+        static_configs = [
+          {
+            targets = [
+              "127.0.0.1:${
+                toString config.services.prometheus.exporters.node.port
+              }"
+            ];
+          }
+        ];
       }
       {
         job_name = "pihole";
-        static_configs = [{
-          targets = [
-            "127.0.0.1:${
-              toString config.services.prometheus.exporters.pihole.port
-            }"
-          ];
-        }];
+        static_configs = [
+          {
+            targets = [
+              "127.0.0.1:${
+                toString config.services.prometheus.exporters.pihole.port
+              }"
+            ];
+          }
+        ];
       }
     ];
   };
@@ -71,7 +75,7 @@
         lifecycler = {
           address = "127.0.0.1";
           ring = {
-            kvstore = { store = "inmemory"; };
+            kvstore = {store = "inmemory";};
             replication_factor = 1;
           };
         };
@@ -83,16 +87,18 @@
       };
 
       schema_config = {
-        configs = [{
-          from = "2022-06-06";
-          store = "boltdb-shipper";
-          object_store = "filesystem";
-          schema = "v11";
-          index = {
-            prefix = "index_";
-            period = "24h";
-          };
-        }];
+        configs = [
+          {
+            from = "2022-06-06";
+            store = "boltdb-shipper";
+            object_store = "filesystem";
+            schema = "v11";
+            index = {
+              prefix = "index_";
+              period = "24h";
+            };
+          }
+        ];
       };
 
       storage_config = {
@@ -103,7 +109,7 @@
           shared_store = "filesystem";
         };
 
-        filesystem = { directory = "/var/lib/loki/chunks"; };
+        filesystem = {directory = "/var/lib/loki/chunks";};
       };
 
       limits_config = {
@@ -111,7 +117,7 @@
         reject_old_samples_max_age = "168h";
       };
 
-      chunk_store_config = { max_look_back_period = "0s"; };
+      chunk_store_config = {max_look_back_period = "0s";};
 
       table_manager = {
         retention_deletes_enabled = false;
@@ -121,7 +127,7 @@
       compactor = {
         working_directory = "/var/lib/loki";
         shared_store = "filesystem";
-        compactor_ring = { kvstore = { store = "inmemory"; }; };
+        compactor_ring = {kvstore = {store = "inmemory";};};
       };
     };
   };
@@ -133,27 +139,32 @@
         http_listen_port = 3031;
         grpc_listen_port = 0;
       };
-      positions = { filename = "/tmp/positions.yaml"; };
-      clients = [{
-        url = "http://127.0.0.1:${
+      positions = {filename = "/tmp/positions.yaml";};
+      clients = [
+        {
+          url = "http://127.0.0.1:${
             toString config.services.loki.configuration.server.http_listen_port
           }/loki/api/v1/push";
-      }];
-      scrape_configs = [{
-        job_name = "journal";
-        journal = {
-          max_age = "12h";
-          labels = {
-            job = "systemd-journal";
-            host = "barbican";
+        }
+      ];
+      scrape_configs = [
+        {
+          job_name = "journal";
+          journal = {
+            max_age = "12h";
+            labels = {
+              job = "systemd-journal";
+              host = "barbican";
+            };
           };
-        };
-        relabel_configs = [{
-          source_labels = [ "__journal__systemd_unit" ];
-          target_label = "unit";
-        }];
-      }];
+          relabel_configs = [
+            {
+              source_labels = ["__journal__systemd_unit"];
+              target_label = "unit";
+            }
+          ];
+        }
+      ];
     };
   };
-
 }
