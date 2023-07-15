@@ -1,4 +1,6 @@
 { pkgs, ... }: {
+  imports = [ ./graphical.nix ];
+
   nix = {
     gc = {
       automatic = true;

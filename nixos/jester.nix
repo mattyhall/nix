@@ -1,6 +1,5 @@
 { pkgs, ... }: {
-  imports =
-    [ ./jester-hardware-configuration.nix ./configuration.nix ./graphical.nix ];
+  imports = [ ./jester-hardware-configuration.nix ./configuration.nix ];
 
   networking.hostName = "jester";
   services.xserver.libinput.enable = true;
@@ -13,5 +12,10 @@
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
+  };
+
+  machine.graphical = {
+    enable = true;
+    wm = "river";
   };
 }
