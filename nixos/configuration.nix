@@ -26,8 +26,6 @@
     shell = pkgs.fish;
   };
 
-  networking.networkmanager.enable = true;
-
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
 
@@ -43,7 +41,5 @@
     neovim
     git
   ];
-
-  system.stateVersion = "22.11"; # Did you read the comment?
 }
 

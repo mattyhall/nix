@@ -1,7 +1,11 @@
 { pkgs, ... }: {
   imports = [ ./hardware.nix ../configuration.nix ];
 
-  networking.hostName = "jester";
+  networking = {
+    hostName = "jester";
+    networkmanager.enable = true;
+  };
+
   services.xserver.libinput.enable = true;
 
   environment.systemPackages = with pkgs; [
@@ -18,4 +22,6 @@
     enable = true;
     wm = "river";
   };
+
+  system.stateVersion = "22.11";
 }
