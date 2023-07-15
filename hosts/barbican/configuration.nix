@@ -36,6 +36,9 @@ in
   services.xserver.desktopManager.xfce.enable = true;
   services.xserver.displayManager.defaultSession = "xfce";
 
+  services.xrdp.enable = true;
+  services.xrdp.defaultWindowManager = "xfce4-session";
+
   environment.systemPackages = with pkgs; [
     vim 
     git
@@ -252,7 +255,7 @@ in
     virtualHosts."qbit.barbican.local".locations."/".return = "301 http://192.168.1.147:8080";
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 4533 ];
+  networking.firewall.allowedTCPPorts = [ 80 3389 4533 ];
 
   system.stateVersion = "22.05"; # Did you read the comment?
 }
