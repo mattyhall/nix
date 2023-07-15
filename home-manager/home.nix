@@ -16,6 +16,7 @@
       openssh
       less
       neovim
+      nil
     ];
   };
 
