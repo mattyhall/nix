@@ -9,18 +9,10 @@
 
   networking.hostName = "barbican";
 
-  services.xserver = {
+  machine.graphical = {
     enable = true;
-    desktopManager.xfce.enable = true;
-    displayManager.defaultSession = "xfce";
+    wm = "xfce";
   };
-
-  services.xrdp = {
-    enable = true;
-    defaultWindowManager = "xfce4-session";
-  };
-
-  environment.systemPackages = with pkgs; [ firefox ];
 
   services.openssh = {
     enable = true;

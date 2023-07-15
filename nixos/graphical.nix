@@ -5,7 +5,7 @@ in {
     enable = lib.mkEnableOption "graphical";
 
     wm = lib.mkOption {
-      type = lib.types.enum [ "river" ];
+      type = lib.types.enum [ "river" "xfce" ];
       default = "river";
       description = "the window manager to use";
     };
@@ -27,6 +27,7 @@ in {
           vaapiIntel
           vaapiVdpau
           libvdpau-va-gl
+          intel-compute-runtime
         ];
       };
 
@@ -67,6 +68,19 @@ in {
             user = "mjh";
           };
         };
+      };
+    })
+
+    (lib.mkIf (cfg.wm == "xfce") {
+      services.xserver = {
+        enable = true;
+        desktopManager.xfce.enable = true;
+        displayManager.defaultSession = "xfce";
+      };
+
+      services.xrdp = {
+        enable = true;
+        defaultWindowManager = "xfce4-session";
       };
     })
   ]);
