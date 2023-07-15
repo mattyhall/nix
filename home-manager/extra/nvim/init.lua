@@ -220,7 +220,7 @@ vim.keymap.set('n', '<leader>nn', ':Neorg index<CR>', { desc = 'Open [n]otes' })
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'vim', 'zig' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'vim', 'zig' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
