@@ -1,7 +1,15 @@
-{...}: {
+{pkgs, ...}: {
   xdg.configFile."river/init" = {
     source = ./extra/river;
     executable = true;
+  };
+
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Ayu-Dark";
+      package = pkgs.ayu-theme-gtk;
+    };
   };
 
   programs = {
