@@ -62,6 +62,8 @@ require('packer').startup(function(use)
 
   use { "nvim-neorg/neorg", run = ":Neorg sync-parsers", requires = { "nvim-lua/plenary.nvim" }, tag = "*" }
 
+  use 'simrat39/rust-tools.nvim'
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
@@ -379,6 +381,19 @@ local servers = {
     },
   },
 }
+
+local rt = require("rust-tools")
+
+rt.setup({
+  server = {
+    on_attach = function(_, bufnr)
+      -- Hover actions
+      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+      -- Code action groups
+      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+    end,
+  },
+})
 
 -- Setup neovim lua configuration
 require('neodev').setup()
