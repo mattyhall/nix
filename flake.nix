@@ -40,9 +40,11 @@
         };
         "mjh@barbican" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            ./home-manager/barbican.nix
-          ];
+          modules = [./home-manager/barbican.nix];
+        };
+        "mathall@lima-default" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [./home-manager/1936.nix];
         };
       };
     }
