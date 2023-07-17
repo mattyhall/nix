@@ -166,6 +166,14 @@ require('lualine').setup {
     component_separators = '|',
     section_separators = '',
   },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {{'filename', path = 1}},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
 }
 
 -- Enable Comment.nvim
@@ -365,33 +373,19 @@ require('lspconfig').clojure_lsp.setup{
   on_attach = on_attach
 }
 
-require('lspconfig').nil_ls.setup{}
+require('lspconfig').nil_ls.setup{
+  on_attach = on_attach
+}
 
-local servers = {
-  -- clangd = {},
-  gopls = {},
-  -- pyright = {},
-  rust_analyzer = {},
-  -- tsserver = {},
-
-  sumneko_lua = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
+require('lspconfig').gopls.setup{
+  on_attach = on_attach
 }
 
 local rt = require("rust-tools")
 
 rt.setup({
   server = {
-    on_attach = function(_, bufnr)
-      -- Hover actions
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-    end,
+    on_attach = on_attach
   },
 })
 
