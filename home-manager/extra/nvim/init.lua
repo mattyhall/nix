@@ -62,6 +62,7 @@ require('packer').startup(function(use)
 
   use { "nvim-neorg/neorg", run = ":Neorg sync-parsers", requires = { "nvim-lua/plenary.nvim" }, tag = "*" }
 
+  use 'rust-lang/rust.vim'
   use 'simrat39/rust-tools.nvim'
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
