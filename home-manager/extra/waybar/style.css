@@ -1,0 +1,26 @@
+* {
+  font-family: "Berkeley Mono";
+  min-height: 0px;
+  font-size: 12px;
+}
+
+window#waybar {
+  background: transparent;
+  color: white;
+}
+
+#tags button {
+  color: white;
+  background: transparent;
+  margin: 1px 2px;
+  padding: 1px 2px;
+}
+
+#tags button.focused {
+  color: #FFB454;
+}
+
+#clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray {
+  padding: 0 3px;
+  margin-right: 16px;
+}     

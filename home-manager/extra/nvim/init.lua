@@ -62,6 +62,9 @@ require('packer').startup(function(use)
 
   use { "nvim-neorg/neorg", run = ":Neorg sync-parsers", requires = { "nvim-lua/plenary.nvim" }, tag = "*" }
 
+  use 'rust-lang/rust.vim'
+  use 'simrat39/rust-tools.nvim'
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
@@ -164,6 +167,14 @@ require('lualine').setup {
     component_separators = '|',
     section_separators = '',
   },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {{'filename', path = 1}},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
 }
 
 -- Enable Comment.nvim
@@ -220,7 +231,7 @@ vim.keymap.set('n', '<leader>nn', ':Neorg index<CR>', { desc = 'Open [n]otes' })
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'vim', 'zig' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'vim', 'zig' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -282,12 +293,12 @@ require('nvim-treesitter.configs').setup {
 require('neorg').setup {
   load = {
     ["core.defaults"] = {}, -- Loads default behaviour
-    ["core.norg.concealer"] = { 
+    ["core.concealer"] = { 
       config = { folds = false }
     }, -- Adds pretty icons to your documents
     ["core.export"] = {},
     ["core.export.markdown"] = {},
-    ["core.norg.dirman"] = { -- Manages Neorg workspaces
+    ["core.dirman"] = { -- Manages Neorg workspaces
       config = {
         workspaces = {
           notes = "~/notes",
@@ -363,20 +374,21 @@ require('lspconfig').clojure_lsp.setup{
   on_attach = on_attach
 }
 
-local servers = {
-  -- clangd = {},
-  gopls = {},
-  -- pyright = {},
-  rust_analyzer = {},
-  -- tsserver = {},
-
-  sumneko_lua = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
+require('lspconfig').nil_ls.setup{
+  on_attach = on_attach
 }
+
+require('lspconfig').gopls.setup{
+  on_attach = on_attach
+}
+
+local rt = require("rust-tools")
+
+rt.setup({
+  server = {
+    on_attach = on_attach
+  },
+})
 
 -- Setup neovim lua configuration
 require('neodev').setup()
