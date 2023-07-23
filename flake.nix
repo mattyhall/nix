@@ -21,7 +21,7 @@
     flake-utils,
   }: let
     utils = flake-utils.lib;
-    systems = [utils.system.x86_64-linux utils.system.x86_64-darwin];
+    systems = [utils.system.x86_64-linux utils.system.x86_64-darwin utils.system.aarch64-linux];
   in
     {
       nixosConfigurations = {

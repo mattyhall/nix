@@ -12,38 +12,24 @@
     enable = true;
     port = 9001;
 
-    exporters = {
-      node = {
-        enable = true;
-        enabledCollectors = [
-          "systemd"
-          "cpu"
-          "cpufreq"
-          "diskstats"
-          "hwmon"
-          "filesystem"
-          "loadavg"
-          "meminfo"
-          "netdev"
-        ];
-        port = 9002;
-      };
-      pihole = {
-        enable = true;
-        piholeHostname = "192.168.1.147";
-        # FIXME: find a way of storing the password
-        # password = builtins.readFile ../../secrets/pihole.pass;
-        port = 9003;
-      };
+    exporters.pihole = {
+      enable = true;
+      piholeHostname = "192.168.1.147";
+      # FIXME: find a way of storing the password
+      # password = builtins.readFile ../../secrets/pihole.pass;
+      port = 9003;
     };
 
     scrapeConfigs = [
       {
-        job_name = "barbican";
+        job_name = "node_exporter";
         static_configs = [
           {
             targets = [
               "127.0.0.1:${
+                toString config.services.prometheus.exporters.node.port
+              }"
+              "49.12.221.177:${
                 toString config.services.prometheus.exporters.node.port
               }"
             ];

@@ -3,7 +3,12 @@
   config,
   ...
 }: {
-  imports = [./hardware.nix ../configuration.nix ./monitoring.nix];
+  imports = [
+    ./hardware.nix
+    ../configuration.nix
+    ../monitoring.nix
+    ./monitoring.nix
+  ];
 
   boot.loader.grub = {
     enable = true;

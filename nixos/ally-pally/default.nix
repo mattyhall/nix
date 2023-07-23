@@ -1,6 +1,7 @@
 {modulesPath, ...}: {
   imports = [
     ../configuration.nix
+    ../monitoring.nix
     ./hardware.nix
     "${modulesPath}/profiles/qemu-guest.nix"
   ];
@@ -11,6 +12,8 @@
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
+
+  services.prometheus.exporters.node.openFirewall = true;
 
   services.openssh = {
     enable = true;
