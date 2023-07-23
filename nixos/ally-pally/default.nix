@@ -29,5 +29,19 @@
     (builtins.readFile ../../keys/jester.pub)
   ];
 
+  services.nginx = {
+    enable = true;
+
+    virtualHosts."mattjhall.xyz" = {
+      root = "/var/www/";
+
+      addSSL = true;
+      sslCertificate = "/etc/certs/mattjhall.xyz.pem";
+      sslCertificateKey = "/etc/certs/mattjhall.xyz.key";
+    };
+  };
+
+  networking.firewall.allowedTCPPorts = [80 443];
+
   system.stateVersion = "23.05";
 }
