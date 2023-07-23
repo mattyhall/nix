@@ -27,6 +27,10 @@
       nixosConfigurations = {
         jester = nixpkgs.lib.nixosSystem {modules = [./nixos/jester];};
         barbican = nixpkgs.lib.nixosSystem {modules = [./nixos/barbican];};
+        ally-pally = nixpkgs.lib.nixosSystem {
+          modules = [./nixos/ally-pally];
+          system = "aarch64-linux";
+        };
       };
 
       homeConfigurations = {
@@ -41,6 +45,10 @@
         "mjh@barbican" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [./home-manager/barbican.nix];
+        };
+        "mjh@ally-pally" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-linux;
+          modules = [./home-manager/ally-pally.nix];
         };
         "mathall@lima-default" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
