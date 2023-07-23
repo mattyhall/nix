@@ -48,6 +48,21 @@
           }
         ];
       }
+      {
+        job_name = "process_exporter";
+        static_configs = [
+          {
+            targets = [
+              "127.0.0.1:${
+                toString config.services.prometheus.exporters.process.port
+              }"
+              "49.12.221.177:${
+                toString config.services.prometheus.exporters.process.port
+              }"
+            ];
+          }
+        ];
+      }
     ];
   };
 

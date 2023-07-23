@@ -14,6 +14,7 @@
   };
 
   services.prometheus.exporters.node.openFirewall = true;
+  services.prometheus.exporters.process.openFirewall = true;
 
   services.openssh = {
     enable = true;
