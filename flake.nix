@@ -12,6 +12,11 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
+
+    lumin = {
+      url = "git+https://github.com/mattyhall/lumin?submodules=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -19,6 +24,7 @@
     nixpkgs,
     home-manager,
     flake-utils,
+    lumin,
   }: let
     utils = flake-utils.lib;
     systems = [utils.system.x86_64-linux utils.system.x86_64-darwin utils.system.aarch64-linux];
@@ -28,8 +34,11 @@
         jester = nixpkgs.lib.nixosSystem {modules = [./nixos/jester];};
         barbican = nixpkgs.lib.nixosSystem {modules = [./nixos/barbican];};
         ally-pally = nixpkgs.lib.nixosSystem {
-          modules = [./nixos/ally-pally];
           system = "aarch64-linux";
+          modules = [
+            ./nixos/ally-pally 
+          ];
+          specialArgs = { inherit lumin; };
         };
       };
 

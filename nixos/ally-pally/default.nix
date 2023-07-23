@@ -1,12 +1,18 @@
-{modulesPath, ...}: {
+{modulesPath, lumin, ...}: {
   imports = [
     ../configuration.nix
     ../monitoring.nix
     ./hardware.nix
     "${modulesPath}/profiles/qemu-guest.nix"
+    lumin.nixosModule.aarch64-linux
   ];
 
   networking.hostName = "ally-pally";
+
+  services.lumin = {
+    enable = true;
+    site = "/var/www/website-rewrite";
+  };
 
   boot.loader = {
     systemd-boot.enable = true;
@@ -33,7 +39,7 @@
     enable = true;
 
     virtualHosts."mattjhall.xyz" = {
-      root = "/var/www/";
+      locations."/".proxyPass = "http://127.0.0.1:3000";
 
       addSSL = true;
       sslCertificate = "/etc/certs/mattjhall.xyz.pem";
