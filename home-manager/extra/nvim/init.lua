@@ -97,6 +97,16 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = vim.fn.expand '$MYVIMRC',
 })
 
+vim.api.nvim_create_autocmd('BufWinLeave', {
+  command = 'mkview',
+  pattern = "*.norg"
+})
+
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  command = 'silent! loadview',
+  pattern = '*.norg'
+})
+
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
