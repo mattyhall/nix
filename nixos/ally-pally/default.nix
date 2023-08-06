@@ -45,6 +45,14 @@
       sslCertificate = "/etc/certs/mattjhall.xyz.pem";
       sslCertificateKey = "/etc/certs/mattjhall.xyz.key";
     };
+
+    virtualHosts."mattjhall.co.uk" = {
+      locations."/".proxyPass = "http://127.0.0.1:3000";
+
+      addSSL = true;
+      sslCertificate = "/etc/certs/mattjhall.co.uk.pem";
+      sslCertificateKey = "/etc/certs/mattjhall.co.uk.key";
+    };
   };
 
   networking.firewall.allowedTCPPorts = [80 443];

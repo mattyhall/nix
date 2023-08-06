@@ -66,11 +66,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1690137321,
-        "narHash": "sha256-uDfqQtsyZpzDJMT2/TnhU3wJY5jK1xNSJMC2ynCM2RM=",
+        "lastModified": 1690731993,
+        "narHash": "sha256-c0/o4/0mlakZUYF2hUjmOAakA0a1YEeAvVjM65B1G6E=",
         "ref": "refs/heads/main",
-        "rev": "ce247d47c4b865d58615206d80523a8d9c980e02",
-        "revCount": 30,
+        "rev": "282631799dd25ca79ef4704849f93f8187d820f7",
+        "revCount": 39,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/mattyhall/lumin"
@@ -104,11 +104,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1689956312,
-        "narHash": "sha256-NV9yamMhE5jgz+ZSM2IgXeYqOvmGIbIIJ+AFIhfD7Ek=",
+        "lastModified": 1690558459,
+        "narHash": "sha256-5W7y1l2cLYPkpJGNlAja7XW2X2o9rjf0O1mo9nxS9jQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "6da4bc6cb07cba1b8e53d139cbf1d2fb8061d967",
+        "rev": "48e82fe1b1c863ee26a33ce9bd39621d2ada0a33",
         "type": "github"
       },
       "original": {
