@@ -58,7 +58,7 @@
 
       shellAliases = {
         gs = "git status";
-        gb = "git branch | fzf | git switch";
+        gb = "git branch | fzf | xargs git switch";
         e = "$EDITOR";
       };
     };
