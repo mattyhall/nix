@@ -1,5 +1,5 @@
 {...}: {
   imports = [./home.nix ./graphical.nix];
 
-  programs.git.userEmail = "matthew@quickbeam.me.uk";
+  programs.git.userEmail = "me@mattjhall.co.uk";
 }
