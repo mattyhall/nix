@@ -11,6 +11,9 @@
   environment.systemPackages = with pkgs; [
     linuxPackages_latest.perf
     libva-utils
+    aerc
+    weechat
+    bitwarden-cli
   ];
 
   boot.loader = {
