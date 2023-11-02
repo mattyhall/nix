@@ -17,6 +17,10 @@
       url = "git+https://github.com/mattyhall/lumin?submodules=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    streamle = {
+      url = "sourcehut:~matthall/streamle";
+    };
   };
 
   outputs = {
@@ -25,6 +29,7 @@
     home-manager,
     flake-utils,
     lumin,
+    streamle,
   }: let
     utils = flake-utils.lib;
     systems = [utils.system.x86_64-linux utils.system.x86_64-darwin utils.system.aarch64-linux];
@@ -38,7 +43,7 @@
           modules = [
             ./nixos/ally-pally 
           ];
-          specialArgs = { inherit lumin; };
+          specialArgs = { inherit lumin streamle; };
         };
       };
 

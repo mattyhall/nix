@@ -1,10 +1,11 @@
-{modulesPath, lumin, ...}: {
+{modulesPath, lumin, streamle, ...}: {
   imports = [
     ../configuration.nix
     ../monitoring.nix
     ./hardware.nix
     "${modulesPath}/profiles/qemu-guest.nix"
     lumin.nixosModule.aarch64-linux
+    streamle.nixosModule.aarch64-linux
   ];
 
   networking.hostName = "ally-pally";
@@ -12,6 +13,16 @@
   services.lumin = {
     enable = true;
     site = "/var/www/website-rewrite";
+  };
+
+  services.streamle = {
+    enable = true;
+    db = "/var/www/streamle/streamle.db";
+
+    rsaKey = {
+      public = "/var/www/streamle/jwt_key.pub";
+      private = "/var/www/streamle/jwt_key";
+    };
   };
 
   boot.loader = {
@@ -48,6 +59,14 @@
 
     virtualHosts."mattjhall.co.uk" = {
       locations."/".proxyPass = "http://127.0.0.1:3000";
+
+      addSSL = true;
+      sslCertificate = "/etc/certs/mattjhall.co.uk.pem";
+      sslCertificateKey = "/etc/certs/mattjhall.co.uk.key";
+    };
+
+    virtualHosts."streamle.mattjhall.co.uk" = {
+      locations."/".proxyPass = "http://127.0.0.1:1470";
 
       addSSL = true;
       sslCertificate = "/etc/certs/mattjhall.co.uk.pem";
