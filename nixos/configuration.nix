@@ -22,7 +22,7 @@
   users.users.mjh = {
     isNormalUser = true;
     home = "/home/mjh";
-    extraGroups = ["wheel" "networkmanager" "docker" "video"];
+    extraGroups = ["wheel" "networkmanager" "docker" "video" "libvirtd"];
     shell = pkgs.fish;
   };
 
