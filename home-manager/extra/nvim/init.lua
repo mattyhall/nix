@@ -349,6 +349,7 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>cd', vim.lsp.buf.type_definition, '[C]ode Type [D]efinition')
@@ -391,6 +392,10 @@ require('lspconfig').nil_ls.setup{
 }
 
 require('lspconfig').gopls.setup{
+  on_attach = on_attach
+}
+
+require'lspconfig'.clangd.setup{
   on_attach = on_attach
 }
 
