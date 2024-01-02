@@ -65,7 +65,7 @@
     foot = {
       enable = true;
       settings = {
-        main.font = "BerkeleyMono-Regular:size=7";
+        main.font = "BerkeleyMono-Regular:size=12";
 
         cursor.color = "0e1419 f19618";
         colors = {
