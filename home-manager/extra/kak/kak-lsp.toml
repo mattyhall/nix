@@ -21,3 +21,10 @@ command = "clangd"
 filetypes = ["zig"]
 roots = ["build.zig"]
 command = "zls"
+
+[language.go]
+filetypes = ["go"]
+roots = ["go.mod"]
+command = "gopls"
+args = ["serve"]
+offset_encoding = "utf-8"

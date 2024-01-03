@@ -94,6 +94,8 @@
         };
 
         colorScheme = "dracula";
+
+        tabStop = 4;
       };
 
       plugins = with pkgs.kakounePlugins; [
