@@ -22,7 +22,7 @@
   users.users.mjh = {
     isNormalUser = true;
     home = "/home/mjh";
-    extraGroups = ["wheel" "networkmanager" "docker" "video" "libvirtd"];
+    extraGroups = ["wheel" "networkmanager" "docker" "video" "libvirtd" "dialout"];
     shell = pkgs.fish;
   };
 
@@ -40,5 +40,13 @@
 
     neovim
     git
+
+    man-pages
   ];
+
+  documentation = {
+    dev.enable = true;
+    man.generateCaches = true;
+    nixos.includeAllModules = true;                                         
+  };
 }
