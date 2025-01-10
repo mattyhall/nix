@@ -3,12 +3,16 @@
 
   nixpkgs.config.allowUnfree = true;
 
-boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" ];
+
+  boot.supportedFilesystems = [ "ntfs" ];
 
   networking = {
     hostName = "jester";
     networkmanager.enable = true;
   };
+
+  services.usbmuxd.enable = true;
 
   services.xserver.libinput.enable = true;
 
@@ -29,6 +33,9 @@ boot.kernelModules = [ "kvm-intel" ];
     cmake
     clang
     virt-manager
+    libimobiledevice
+    ifuse
+    ledger
   ];
 
   virtualisation.libvirtd.enable = true;
