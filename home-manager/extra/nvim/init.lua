@@ -43,7 +43,6 @@ require('packer').startup(function(use)
 
   -- Git related plugins
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
-  use 'TimUntersberger/neogit'
   use 'lewis6991/gitsigns.nvim'
   use 'Almo7aya/openingh.nvim'
 
@@ -62,10 +61,11 @@ require('packer').startup(function(use)
   use { 'tpope/vim-sexp-mappings-for-regular-people', requires = { 'guns/vim-sexp' } }
   use 'kylechui/nvim-surround'
 
-  use { "nvim-neorg/neorg", run = ":Neorg sync-parsers", requires = { "nvim-lua/plenary.nvim" }, tag = "*" }
-
   use 'rust-lang/rust.vim'
   use 'simrat39/rust-tools.nvim'
+
+  use 'Tetralux/odin.vim'
+  use { "elixir-tools/elixir-tools.nvim", tag = "stable", requires = { "nvim-lua/plenary.nvim" }}
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -97,16 +97,6 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   command = 'source <afile> | silent! LspStop | silent! LspStart | PackerCompile',
   group = packer_group,
   pattern = vim.fn.expand '$MYVIMRC',
-})
-
-vim.api.nvim_create_autocmd('BufWinLeave', {
-  command = 'mkview',
-  pattern = "*.norg"
-})
-
-vim.api.nvim_create_autocmd('BufWinEnter', {
-  command = 'silent! loadview',
-  pattern = '*.norg'
 })
 
 -- [[ Setting options ]]
@@ -217,12 +207,6 @@ require('telescope').setup {
   },
 }
 
-require('neogit').setup{
-  integrations = {
-    diffview = true
-  }
-}
-
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
@@ -243,7 +227,7 @@ vim.keymap.set('n', '<leader>nn', ':Neorg index<CR>', { desc = 'Open [n]otes' })
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'vim', 'zig' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'vim', 'zig', 'elixir', 'heex', 'eex', 'haskell' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -302,26 +286,6 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
-require('neorg').setup {
-  load = {
-    ["core.defaults"] = {}, -- Loads default behaviour
-    ["core.concealer"] = { 
-      config = { folds = false }
-    }, -- Adds pretty icons to your documents
-    ["core.export"] = {},
-    ["core.export.markdown"] = {},
-    ["core.dirman"] = { -- Manages Neorg workspaces
-      config = {
-        workspaces = {
-          notes = "~/notes",
-        },
-
-        default_workspace = "notes"
-      },
-    },
-  },
-}
-
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
@@ -374,6 +338,15 @@ local on_attach = function(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
+require("elixir").setup({
+  nextls = {enable = false},
+  elixirls = {
+    enable = true,
+    on_attach = on_attach,
+  },
+  projectionist = {enable = true}
+})
+
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
@@ -387,11 +360,15 @@ require('lspconfig').clojure_lsp.setup{
   on_attach = on_attach
 }
 
-require('lspconfig').nil_ls.setup{
+require('lspconfig').gopls.setup{
   on_attach = on_attach
 }
 
-require('lspconfig').gopls.setup{
+require('lspconfig').ols.setup{
+  on_attach = on_attach
+}
+
+require'lspconfig'.hls.setup{
   on_attach = on_attach
 }
 
@@ -433,8 +410,8 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert {
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-D>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-F>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
