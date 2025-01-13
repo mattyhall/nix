@@ -155,6 +155,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+    pattern = { 'c', 'cpp' },
+    callback = function()
+      vim.wo.cc = '80'
+      vim.bo.ts = 2
+      vim.bo.sw = 2
+      vim.bo.softtabstop = 2
+    end,
+})
+
 require('ayu').setup{
   mirage = true
 }
@@ -441,6 +451,5 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
-
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
